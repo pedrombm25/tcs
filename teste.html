@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚚Agenda Transportes Camilo de Sousa 🚚</title>
+  <style>
+    /* Estilos gerais */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* Cabeçalho */
+    header {
+      background-color: #2980b9;
+      color: white;
+      text-align: center;
+      padding: 40px;
+      margin-bottom: 40px;
+      border-bottom: 4px solid #1abc9c;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    /* Formulário */
+    form {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-top: 5px solid #1abc9c;
+    }
+
+    form label {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease-in-out;
+      padding: 15px;
+    }
+
+    button:hover {
+      background-color: #3498db;
+    }
+
+    /* Tabela */
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    th {
+      background-color: #2980b9;
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #ecf0f1;
+    }
+
+    tr:hover {
+      background-color: #f1c40f;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      cursor: pointer;
+      border: none;
+      color: white;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .edit-btn {
+      background-color: #f39c12;
+    }
+
+    .edit-btn:hover {
+      background-color: #e67e22;
+    }
+
+    .delete-btn {
+      background-color: #c0392b;
+    }
+
+    .delete-btn:hover {
+      background-color: #e74c3c;
+    }
+
+    /* Design Responsivo */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      form {
+        width: 100%;
+      }
+
+      table {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🚚Agenda Transportes Camilo de Sousa 🚚</h1>
+</header>
+
+<!-- Formulário para adicionar nova marcação -->
+<form id="agenda-form">
+  <input type="hidden" id="editIndex">
+
+  <label for="data">Data:</label>
+  <input type="date" id="data" required>
+
+  <label for="hora">Hora:</label>
+  <select id="hora" required>
+    <option value="">--Selecionar Hora--</option>
+    <option value="07:00">07:00</option>
+    <option value="08:00">08:00</option>
+    <option value="09:00">09:00</option>
+    <option value="10:00">10:00</option>
+    <option value="11:00">11:00</option>
+    <option value="12:00">12:00</option>
+    <option value="13:00">13:00</option>
+    <option value="14:00">14:00</option>
+    <option value="15:00">15:00</option>
+    <option value="16:00">16:00</option>
+    <option value="17:00">17:00</option>
+    <option value="18:00">18:00</option>
+    <option value="19:00">19:00</option>
+  </select>
+
+  <label for="cliente">Nome do Cliente:</label>
+  <input type="text" id="cliente" required>
+
+  <label for="telefone">Número de Telemóvel:</label>
+  <input type="text" id="telefone" required>
+
+  <label for="tipoCarga">Tipo de Carga:</label>
+  <input type="text" id="tipoCarga" required>
+
+  <label for="moradaRecolha">Morada de Recolha:</label>
+  <textarea id="moradaRecolha" rows="2" required></textarea>
+
+  <label for="moradaEntrega">Morada de Entrega:</label>
+  <textarea id="moradaEntrega" rows="2" required></textarea>
+
+  <label for="viatura">Viatura:</label>
+  <select id="viatura" required>
+    <option value="">--Selecionar--</option>
+    <option value="N10 com grua">N10 com grua</option>
+    <option value="Renault">Renault</option>
+  </select>
+
+  <button type="submit">Guardar Marcação</button>
+</form>
+
+<!-- Tabela de marcações -->
+<table id="agenda-tabela">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Hora</th>
+      <th>Cliente</th>
+      <th>Telefone</th>
+      <th>Tipo de Carga</th>
+      <th>Morada de Recolha</th>
+      <th>Morada de Entrega</th>
+      <th>Viatura</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- As marcações serão inseridas aqui via JavaScript -->
+  </tbody>
+</table>
+
+<script>
+  const form = document.getElementById('agenda-form');
+  const tabela = document.getElementById('agenda-tabela').querySelector('tbody');
+  let marcacoes = JSON.parse(localStorage.getItem('marcacoes')) || [];
+
+  function renderTabela() {
+    tabela.innerHTML = '';
+    marcacoes.forEach((m, index) => {
+      tabela.innerHTML += `
+        <tr>
+          <td>${m.data}</td>
+          <td>${m.hora}</td>
+          <td>${m.cliente}</td>
+          <td>${m.telefone}</td>
+          <td>${m.tipoCarga}</td>
+          <td>${m.moradaRecolha}</td>
+          <td>${m.moradaEntrega}</td>
+          <td>${m.viatura}</td>
+          <td>
+            <button class="btn edit-btn" onclick="editarMarcacao(${index})">✏️</button>
+            <button class="btn delete-btn" onclick="apagarMarcacao(${index})">🗑️</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const novaMarcacao = {
+      data: document.getElementById('data').value,
+      hora: document.getElementById('hora').value,
+      cliente: document.getElementById('cliente').value,
+      telefone: document.getElementById('telefone').value,
+      tipoCarga: document.getElementById('tipoCarga').value,
+      moradaRecolha: document.getElementById('moradaRecolha').value,
+      moradaEntrega: document.getElementById('moradaEntrega').value,
+      viatura: document.getElementById('viatura').value
+    };
+
+    // Verificação de duplicação de data e hora
+    for (let i = 0; i < marcacoes.length; i++) {
+      if (marcacoes[i].data === novaMarcacao.data && marcacoes[i].hora === novaMarcacao.hora) {
+        alert("Erro: Já existe uma marcação para esta data e hora.");
+        return;
+      }
+    }
+
+    const editIndex = document.getElementById('editIndex').value;
+    if (editIndex === "") {
+      marcacoes.push(novaMarcacao);
+    } else {
+      marcacoes[editIndex] = novaMarcacao;
+      document.getElementById('editIndex').value = "";
+    }
+
+    localStorage.setItem('marcacoes', JSON.stringify(marcacoes));
+    renderTabela();
+    form.reset();
+  });
+
+  function apagarMarcacao(index) {
+    if (confirm("Tem a certeza que quer apagar esta marcação?")) {
+      marcacoes.splice(index, 1);
+      localStorage.setItem('marcacoes', JSON.stringify(marcacoes));
+      renderTabela();
+    }
+  }
+
+  function editarMarcacao(index) {
+    const m = marcacoes[index];
+    document.getElementById('data').value = m.data;
+    document.getElementById('hora').value = m.hora;
+    document.getElementById('cliente').value = m.cliente;
+    document.getElementById('telefone').value = m.telefone;
+    document.getElementById('tipoCarga').value = m.tipoCarga;
+    document.getElementById('moradaRecolha').value = m.moradaRecolha;
+    document.getElementById('moradaEntrega').value = m.moradaEntrega;
+    document.getElementById('viatura').value = m.viatura;
+    document.getElementById('editIndex').value = index;
+  }
+
+  renderTabela();
+</script>
+
+</body>
+</html>
